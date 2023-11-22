@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 Components</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app" v-cloak> 
+       <!--We can create a custom vue component--> 
+       <login-form />
+
+        <button v-on:click="toggleBox">ToggleBox</button>
+   
+
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        let app = Vue.createApp({
+            data: function() {
+                return {
+                    greeting: "Hello Vue 3!",
+                    isVisible: false,
+                    // isVisible2: true,
+                }
+            },
+            methods:{
+                toggleBox() {
+                    this.isVisible = !this.isVisible
+                },
+                greet() {
+                    console.log(this.greeting)
+                }
+            }
+        })
+
+        app.component("login-form", {
+            template: `
+                <form @submit.prevent="handleSubmit">
+                    <h1>{{ title }}</h1>
+                    <input type="email" v-model="email"/>
+                    <input type="password" v-model="password"/>
+                    <button>Login</button>    
+                </form>
+            `,
+            data() {
+                return {
+                    title: 'Login Form',
+                    email:'',
+                    password:''
+                }
+            },
+            methods:{
+                handleSubmit() {
+                    console.log(this.email, this.password)
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+</html>
